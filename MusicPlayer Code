@@ -1,0 +1,59 @@
+import pygame
+
+class MusicPlayer:
+    def __init__(self):
+        pygame.init()
+        self.music_list = []
+        self.current_song = 0
+
+    def add_music(self, file_path):
+        self.music_list.append(file_path)
+
+    def play_music(self):
+        pygame.mixer.music.load(self.music_list[self.current_song])
+        pygame.mixer.music.play()
+
+    def stop_music(self):
+        pygame.mixer.music.stop()
+
+    def next_song(self):
+        self.current_song += 1
+        if self.current_song >= len(self.music_list):
+            self.current_song = 0
+        self.play_music()
+
+    def previous_song(self):
+        self.current_song -= 1
+        if self.current_song < 0:
+            self.current_song = len(self.music_list) - 1
+        self.play_music()
+
+def main():
+    music_player = MusicPlayer()
+    music_player.add_music("song1.mp3")
+    music_player.add_music("song2.mp3")
+    music_player.add_music("song3.mp3")
+
+    while True:
+        print("1. Play Music")
+        print("2. Stop Music")
+        print("3. Next Song")
+        print("4. Previous Song")
+        print("5. Exit")
+        choice = input("Choose an option: ")
+        if choice == "1":
+            music_player.play_music()
+        elif choice == "2":
+            music_player.stop_music()
+        elif choice == "3":
+            music_player.next_song()
+        elif choice == "4":
+            music_player.previous_song()
+        elif choice == "5":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid option. Please try again.")
+
+if __name__ == "__main__":
+    main()
